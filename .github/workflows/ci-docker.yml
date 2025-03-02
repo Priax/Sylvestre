@@ -45,9 +45,24 @@ jobs:
 
       - name: 🗉 List running containers
         run: docker ps -a
+
+      - name: 📝 Show logs of PostgreSQL
+        run: |
+          CONTAINER_ID=$(docker ps -aqf "name=postgres")
+          if [ -n "$CONTAINER_ID" ]; then
+            docker logs $CONTAINER_ID
+          else
+            echo "No container found for postgres"
+          fi
       
-      - name: 📝 Show logs of Rust service
-        run: docker logs $(docker ps -qf "name=rust_service")
+      - name: 📝 Show logs of Rust service (including exited containers)
+        run: |
+          CONTAINER_ID=$(docker ps -aqf "name=rust_service")
+          if [ -n "$CONTAINER_ID" ]; then
+            docker logs $CONTAINER_ID
+          else
+            echo "No container found for rust_service"
+          fi
 
       - name: 📝 Show logs of NestJS service
         run: docker logs $(docker ps -qf "name=nest_service")
