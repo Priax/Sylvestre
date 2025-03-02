@@ -1,0 +1,38 @@
+services:
+  nest_service:
+    build:
+      context: ./nest_service
+    ports:
+      - "3000:3000"
+    depends_on:
+      - rust_service
+    networks:
+      - app_network
+
+  rust_service:
+    build:
+      context: ./rust_service
+    ports:
+      - "50051:50051"
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    networks:
+      - app_network
+
+  postgres:
+    image: postgres:latest
+    env_file:
+      - .env
+    ports:
+      - "5433:5432"
+    networks:
+      - app_network
+    volumes:
+      - ./postgres/init/:/docker-entrypoint-initdb.d/
+
+networks:
+  app_network:
+    driver: bridge
+
