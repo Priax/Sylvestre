@@ -1,0 +1,38 @@
+name: CI with Docker Compose
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🐳 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: 🏗 Build and start Docker services
+        run: docker compose up -d
+
+      - name: ⏳ Wait for services to be ready
+        run: sleep 10
+
+      - name: 📋 List running containers
+        run: docker ps -a
+
+      - name: 🚀 Run tests in NestJS container
+        run: docker exec $(docker ps -qf "name=nest_service") npm test
+
+      - name: 🦀 Run tests in Rust container
+        run: docker exec $(docker ps -qf "name=rust_service") cargo test --verbose
+
+      - name: 🛑 Stop Docker services
+        run: docker compose down
