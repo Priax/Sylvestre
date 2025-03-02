@@ -11,12 +11,10 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    environment: PORT
 
     steps:
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
-
 
       - name: 🕵️ Vérifier les secrets récupérés
         run: |
