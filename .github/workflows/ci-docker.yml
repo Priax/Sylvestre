@@ -24,6 +24,9 @@ jobs:
           echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
           echo "PORT=${{ secrets.PORT }}" >> nest_service/.env
+    
+      - name: 🔍 Debug .env file
+        run: cat .env && cat rust_service/.env
 
       - name: 🐩 Install grpcurl
         run: |
