@@ -17,6 +17,16 @@ jobs:
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
+
+      - name: 🕵️ Vérifier les secrets récupérés
+        run: |
+          echo "RUST_DATABASE_URL=${{ secrets.RUST_DATABASE_URL }}"
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}"
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}"
+          echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}"
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}"
+          echo "PORT=${{ secrets.PORT }}"
+
       - name: 📄 Create .env file from Secrets
         run: |
           echo "DATABASE_URL=${{ secrets.RUST_DATABASE_URL }}" >> rust_service/.env
