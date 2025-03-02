@@ -25,16 +25,21 @@ jobs:
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
           echo "PORT=${{ secrets.PORT }}" >> nest_service/.env
 
-      - name: 🐳 Set up Docker Buildx
+      - name: 🐩 Install grpcurl
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y grpcurl
+
+      - name: 🐫 Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: 🏗 Build and start Docker services
+      - name: 🏷 Build and start Docker services
         run: docker compose up -d
 
       - name: ⏳ Wait for services to be ready
         run: sleep 10
 
-      - name: 📋 List running containers
+      - name: 🗉 List running containers
         run: docker ps -a
 
       #- name: 🚀 Run tests in NestJS container
@@ -43,5 +48,13 @@ jobs:
       #- name: 🦀 Run tests in Rust container
       #run: docker exec $(docker ps -qf "name=rust_service") cargo test --verbose
 
-      - name: 🛑 Stop Docker services
+      - name: 🦀 Run SQLx migrations in Rust container
+        run: docker exec $(docker ps -qf "name=rust_service") sqlx migrate run
+
+      - name: 🛠️ Test gRPC endpoint
+        run: |
+          sleep 5  # Attendre que le service Rust soit bien prêt
+          grpcurl -plaintext -d '{"name": "Priax"}' localhost:50051 myservice.RustService/SayHello
+
+      - name: 🛡️ Stop Docker services
         run: docker compose down
