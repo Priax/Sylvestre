@@ -60,7 +60,7 @@ impl RustService for MyRustService {
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
 
-    let database_url = env::var("DATABASE_URL")
+    let database_url = env::var("RUST_DATABASE_URL")
         .expect("DATABASE_URL must be set in .env file");
 
     let db_pool = PgPool::connect(&database_url).await?;
