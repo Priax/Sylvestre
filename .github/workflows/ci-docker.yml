@@ -45,6 +45,12 @@ jobs:
 
       - name: 🗉 List running containers
         run: docker ps -a
+      
+      - name: 📝 Show logs of Rust service
+        run: docker logs $(docker ps -qf "name=rust_service")
+
+      - name: 📝 Show logs of NestJS service
+        run: docker logs $(docker ps -qf "name=nest_service")
 
       #- name: 🚀 Run tests in NestJS container
       #run: docker exec $(docker ps -qf "name=nest_service") npm test
