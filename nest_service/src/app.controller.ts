@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { RustServiceClient } from './rust.service';
 
 @Controller()
@@ -13,6 +13,11 @@ export class AppController {
   @Get('goodbye')
   async getGoodbye(@Query('name') name: string): Promise<string> {
     return this.rustService.sayGoodbye(name);  // Appel de la méthode gRPC SayGoodbye
+  }
+  
+  @Post('add-species')
+  async addSpecies(@Body() body: { name: string, description: string }): Promise<string> {
+    return this.rustService.addSpecies(body.name, body.description);
   }
 }
 

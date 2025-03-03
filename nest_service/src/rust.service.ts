@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 interface RustService {
   sayHello(data: { name: string }): Observable<{ message: string }>;
   sayGoodbye(data: { name: string }): Observable<{ message: string }>;
+  addSpecies(data: { name: string, description: string }): Observable<{ status: string }>;
 }
 
 @Injectable()
@@ -33,6 +34,11 @@ export class RustServiceClient implements OnModuleInit {
   async sayGoodbye(name: string): Promise<string> {
     const response = await this.rustService.sayGoodbye({ name }).toPromise();
     return response?.message ?? 'Message par défaut';
+  }
+  
+  async addSpecies(name: string, description: string): Promise<string> {
+    const response = await this.rustService.addSpecies({ name, description }).toPromise();
+    return response?.status ?? 'Error';
   }
 }
 

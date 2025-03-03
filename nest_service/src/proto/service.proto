@@ -5,6 +5,7 @@ package myservice;
 service RustService {
   rpc SayHello (HelloRequest) returns (HelloReply);
   rpc SayGoodbye (GoodbyeRequest) returns (GoodbyeReply);  // Ajout de la méthode SayGoodbye
+  rpc AddSpecies (AddSpeciesRequest) returns (AddSpeciesReply);
 }
 
 message HelloRequest {
@@ -23,3 +24,11 @@ message GoodbyeReply {
   string message = 1;
 }
 
+message AddSpeciesRequest {
+  string name = 1;
+  string description = 2;
+}
+
+message AddSpeciesReply {
+  string status = 1;
+}

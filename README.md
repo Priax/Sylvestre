@@ -1,3 +1,5 @@
+Pour lancer le Projet : docker compose up --build
+
 docker exec -it sylvestre-rust_service-1 bash # Pour accéder au conteneur rust
 
 sqlx migrate run # Ceci va permettre de créer les tables et les populer !

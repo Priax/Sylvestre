@@ -1,7 +1,7 @@
 use tonic::{transport::Server, Request, Response, Status};
 use tonic_reflection::server::Builder;
 use myservice::rust_service_server::{RustService, RustServiceServer};
-use myservice::{HelloRequest, HelloReply, GoodbyeRequest, GoodbyeReply};
+use myservice::{HelloRequest, HelloReply, GoodbyeRequest, GoodbyeReply, AddSpeciesReply, AddSpeciesRequest};
 use sqlx::PgPool;
 use dotenv::dotenv;
 use std::env;
@@ -53,6 +53,21 @@ impl RustService for MyRustService {
         };
 
         Ok(Response::new(reply))
+    }
+
+    async fn add_species(&self, request: Request<AddSpeciesRequest>) -> Result<Response<AddSpeciesReply>, Status> {
+        let req = request.into_inner();
+
+        let result = sqlx::query("INSERT INTO species (name, description) VALUES ($1, $2)")
+            .bind(&req.name)
+            .bind(&req.description)
+            .execute(&self.db_pool)
+            .await;
+
+        match result {
+            Ok(_) => Ok(Response::new(AddSpeciesReply { status: "Success".into() })),
+            Err(e) => Err(Status::internal(format!("Database error: {}", e))),
+        }
     }
 }
 
