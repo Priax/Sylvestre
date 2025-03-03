@@ -31,4 +31,10 @@ Pour créer des fichiers de migrations sqlx cd dans rust_service/ et faire:
 sqlx migrate add create_goodbye_message_table
 sqlx migrate add populate_goodbye_message_table
 ```
+To push:
+```sh
+git add .
+git commit -m # If you add [skip ci] it will skip the github actions in the main
+git push
+```
 
