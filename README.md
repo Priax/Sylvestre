@@ -1,9 +1,10 @@
 Pour lancer le Projet : docker compose up --build
 
+```sh
 docker exec -it sylvestre-rust_service-1 bash # Pour accéder au conteneur rust
 
 sqlx migrate run # Ceci va permettre de créer les tables et les populer !
-
+```
 
 Pour créer des routes gRPC, déjà commencer par le service.proto (Doivent être les mêmes pour le rust_service et le nest_service)
 
@@ -23,5 +24,11 @@ docker exec -it sylvestre-postgres-1 bash
 psql -U postgres Sylvestre_database
 
 select * from greetings;
+```
+
+Pour créer des fichiers de migrations sqlx cd dans rust_service/ et faire:
+```sh
+sqlx migrate add create_goodbye_message_table
+sqlx migrate add populate_goodbye_message_table
 ```
 
