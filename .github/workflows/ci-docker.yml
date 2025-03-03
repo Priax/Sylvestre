@@ -97,8 +97,11 @@ jobs:
         run: curl http://localhost:3000/goodbye?name=Alice
       
       - name: 🛠️ Test POST of specie with curl
-        run: curl -X POST http://localhost:3000/add-species -H "Content-Type: application/json" -d '{\"name\": \"Lion\", \"description\": \"Grand félin d’Afrique\"}'
-      
+        run: >
+          curl -X POST http://localhost:3000/add-species 
+          -H "Content-Type: application/json" 
+          -d '{"name": "Lion", "description": "Grand félin d’Afrique"}'
+
       - name: 🧐 Check if specie is in the database
         run: |
           docker exec $(docker ps -qf "name=postgres") psql -U priax -d Sylvestre_database -c "SELECT * FROM species;"
