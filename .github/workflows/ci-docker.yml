@@ -53,7 +53,7 @@ jobs:
         run: docker compose up -d
 
       - name: ⏳ Wait for services to be ready
-        run: sleep 30
+        run: sleep 10
 
       - name: 🗉 List running containers
         run: docker ps -a
@@ -92,6 +92,9 @@ jobs:
         run: |
           sleep 5  # Attendre que le service Rust soit bien prêt
           grpcurl -plaintext -d '{"name": "Priax"}' localhost:50051 myservice.RustService/SayHello
+      
+      - name: 🛠️ Test endpoint with curl
+        run: curl http://localhost:3000/goodbye?name=Alice
 
       - name: 🛡️ Stop Docker services
         run: docker compose down
