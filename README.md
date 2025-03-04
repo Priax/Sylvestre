@@ -1,4 +1,4 @@
-Pour lancer le Projet : docker compose up --build
+Pour lancer le Projet Sylvestre : docker compose up --build
 
 ```sh
 docker exec -it sylvestre-rust_service-1 bash # Pour accéder au conteneur rust
