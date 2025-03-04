@@ -38,3 +38,18 @@ git commit -m # If you add [skip ci] it will skip the github actions in the main
 git push
 ```
 
+curl -X POST http://localhost:3000/add-species \
+     -H "Content-Type: application/json" \
+     -d '{
+           "name": "Dragon",
+           "description": "A powerful mythical creature",
+           "average_lifespan": 1000,
+           "population": 500
+         }'
+
+grpcurl -plaintext -d '{
+  "name": "Dragon",
+  "description": "A powerful mythical creature",
+  "average_lifespan": 1000.5,
+  "population": 500
+}' localhost:50051 myservice.RustService/AddSpecies

@@ -100,7 +100,7 @@ jobs:
         run: >
           curl -X POST http://localhost:3000/add-species 
           -H "Content-Type: application/json" 
-          -d '{"name": "Lion", "description": "Grand félin d’Afrique"}'
+          -d '{"name": "Lion", "description": "Grand félin d’Afrique", "population": 500}'
 
       - name: 🧐 Check if specie is in the database
         run: |

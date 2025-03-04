@@ -57,10 +57,13 @@ impl RustService for MyRustService {
 
     async fn add_species(&self, request: Request<AddSpeciesRequest>) -> Result<Response<AddSpeciesReply>, Status> {
         let req = request.into_inner();
+        
+        println!("Received species: {:?}", req); // Débogage
 
-        let result = sqlx::query("INSERT INTO species (name, description) VALUES ($1, $2)")
+        let result = sqlx::query("INSERT INTO species (name, description, population) VALUES ($1, $2, $3)")
             .bind(&req.name)
             .bind(&req.description)
+            .bind(req.population)
             .execute(&self.db_pool)
             .await;
 

@@ -16,8 +16,9 @@ export class AppController {
   }
   
   @Post('add-species')
-  async addSpecies(@Body() body: { name: string, description: string }): Promise<string> {
-    return this.rustService.addSpecies(body.name, body.description);
+  async addSpecies(@Body() body: { name: string, description: string, population: number }): Promise<string> {
+      console.log("Data sent to gRPC: ", body);
+      return this.rustService.addSpecies(body.name, body.description, body.population);
   }
 }
 
