@@ -29,8 +29,8 @@ services:
       - "5433:5432"
     networks:
       - app_network
-    volumes:
-      - ./postgres/init/:/docker-entrypoint-initdb.d/
+      #volumes:
+      #- ./postgres/init/:/docker-entrypoint-initdb.d/
 
 networks:
   app_network:

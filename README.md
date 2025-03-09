@@ -21,7 +21,7 @@ Voici comment voir les tables de la database, si vous avez envie de faire des te
 ```sh
 docker exec -it sylvestre-postgres-1 bash
 
-psql -U postgres Sylvestre_database
+psql -U postgres -d Sylvestre_database
 
 select * from greetings;
 ```
